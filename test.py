@@ -1,99 +1,22 @@
-import numpy as np
+from tensorflow.keras.layers import Input, Conv2D
+from tensorflow.keras.models import Model
+from tensorflow.keras.regularizers import l2
+import tensorflow as tf
 
-
-new = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
-        'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
-        'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
-        'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard',
-        'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple',
-        'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch',
-        'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard',
-        'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase',
-        'scissors', 'teddy bear', 'hair drier', 'toothbrush']
+input_shape = (448, 448, 3)
+inputs = Input(input_shape)
 
 
 
-indx = 38
-
-# print(CLASESS_YOLO[32])
-print(new[indx])
+x = Conv2D(16, (3, 3), padding='same', name='convolutional_0', use_bias=False,
+               kernel_regularizer=l2(5e-4), trainable=False)(inputs)
 
 
+model = Model(inputs=inputs, outputs=x)
 
-a1 = np.array([[[ 9.9834335e-01, 9.0850480e-02, 2.0397224e-03, 6.0911446e+01],
-    [-5.7529200e-02, 9.9568713e-01, 1.8676724e-02, 6.5552841e+01],
-    [-9.6259447e-04, -1.8795315e-02, 9.9926418e-01, -6.6671745e+01]]],
-   dtype=np.float32)
-   
-a2 = np.array([[[ 16.875217, 47.727867],
-    [ 18.5312 , 58.871964],
-    [ 21.269653, 68.91788 ],
-    [ 23.80677 , 78.12444 ],
-    [ 27.450962, 87.97461 ],
-    [ 33.779297, 95.551636],
-    [ 40.861557, 99.830734],
-    [ 49.487293, 103.285  ],
-    [ 62.32138 , 104.2903 ],
-    [ 74.98309 , 100.86293 ],
-    [ 83.20778 , 96.048584],
-    [ 89.95276 , 90.59442 ],
-    [ 95.378006, 81.98739 ],
-    [ 97.868515, 71.51292 ],
-    [ 99.30309 , 61.893307],
-    [100.598434, 51.545486],
-    [100.940125, 40.2154 ],
-    [ 25.512775, 35.408516],
-    [ 30.087223, 31.271736],
-    [ 36.07865 , 29.676025],
-    [ 41.92532 , 29.58139 ],
-    [ 47.250164, 30.401443],
-    [ 68.8577 , 28.32367 ],
-    [ 74.117744, 26.491821],
-    [ 79.93737 , 25.499756],
-    [ 86.15676 , 26.022583],
-    [ 91.14642 , 29.42627 ],
-    [ 58.767807, 40.42507 ],
-    [ 59.15167 , 47.30311 ],
-    [ 59.560005, 54.262154],
-    [ 59.853745, 60.130535],
-    [ 52.975796, 65.6463 ],
-    [ 55.9756 , 66.02486 ],
-    [ 60.120567, 66.49219 ],
-    [ 64.14027 , 65.38748 ],
-    [ 67.093155, 64.48447 ],
-    [ 33.9909 , 42.890312],
-    [ 37.49862 , 40.441147],
-    [ 42.698097, 39.925293],
-    [ 47.639  , 41.848083],
-    [ 43.315166, 43.478165],
-    [ 37.937504, 44.225464],
-    [ 69.73981 , 39.834755],
-    [ 74.429955, 37.00511 ],
-    [ 79.7887 , 36.655716],
-    [ 83.62322 , 38.485092],
-    [ 79.7569 , 40.36573 ],
-    [ 74.28506 , 40.65793 ],
-    [ 45.255856, 79.34456 ],
-    [ 50.67287 , 76.03704 ],
-    [ 57.023514, 73.53143 ],
-    [ 60.471573, 73.928246],
-    [ 63.83687 , 72.987724],
-    [ 70.34885 , 74.50347 ],
-    [ 75.65529 , 76.92372 ],
-    [ 70.11117 , 79.69166 ],
-    [ 65.51456 , 81.72054 ],
-    [ 60.704964, 82.39442 ],
-    [ 55.92644 , 82.52057 ],
-    [ 51.334763, 81.29144 ],
-    [ 46.70565 , 78.92231 ],
-    [ 56.131775, 77.36346 ],
-    [ 60.55644 , 77.003044],
-    [ 64.970474, 76.72075 ],
-    [ 74.65178 , 76.73056 ],
-    [ 64.61372 , 77.20917 ],
-    [ 60.31419 , 77.783844],
-    [ 56.08271 , 77.901436]]], dtype=np.float32)
+print(model.summary())
 
-
-
-print(a1.shape, a2.shape)
+tf.keras.utils.plot_model(model,
+                              to_file='test.png',
+                              show_shapes=True,
+                              show_layer_names=True)
